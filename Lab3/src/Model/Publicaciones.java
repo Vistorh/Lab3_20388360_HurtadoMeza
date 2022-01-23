@@ -21,7 +21,7 @@ public class Publicaciones {
     //constructor
     public Publicaciones(String cuerpo, Usuario autor,String titulo) {
         this.compartidos= new ArrayList<>();
-        this version = new ArrayList<>();
+        this.version = new ArrayList<>();
         this.cuerpoPubli = cuerpo;
         this.autorPubli = autor;
         this.tituloPubli = titulo;

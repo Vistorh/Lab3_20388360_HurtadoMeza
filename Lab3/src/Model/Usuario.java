@@ -68,4 +68,5 @@ public class Usuario {
         return "Nombre:"+username+" Tienes un total de:"+publicacionesRealizadas.size()+"publicaciones realizadas\n";
     }
 
+
 }
