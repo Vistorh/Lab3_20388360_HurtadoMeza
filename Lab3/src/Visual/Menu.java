@@ -98,11 +98,13 @@ public class Menu {
                 System.out.println("### Bienvenido a GoogleDocs###");//agregar nombre de la PL
                 System.out.println("## Registrado como: "+ ctrl.entregarOnline().getUsername()+ " ##");
                 System.out.println("Escoja la opción que desea realizar: ");
-                System.out.println("1. Realizar publicación");
-                System.out.println("2. Visualizar usuario");
-                System.out.println("3. otorgar permiso");
-                System.out.println("4. Cerrar sesión");
-                System.out.println("5. Salir del programa");
+                System.out.println("1. Crear nuevo documento");
+                System.out.println("2. Compartir documento");
+                System.out.println("3. Agregar contenido a un documento");
+                System.out.println("4. Restaurar versión de un documento");
+                System.out.println("5. Visualizar usuario");
+                System.out.println("6. Cerrar sesión");
+                System.out.println("7. Salir del programa");
 
 
                 try {
@@ -115,14 +117,10 @@ public class Menu {
                             String tituloPubli = input.nextLine();
                             System.out.println("Ingrese el contenido de su Publicacion:");
                             String contenido = input.nextLine();
-
-                                ctrl.post(tituloPubli, contenido);
-                                break;
-                        case 2: //visualizar
-                            ctrl.visualize();
+                            ctrl.post(tituloPubli, contenido);
                             break;
 
-                        case 3: // share
+                        case 2: // share
                             System.out.println("Ingrese la ID de la publicacion");
                             Integer idACompartir = input.nextInt();
                             ArrayList<String> listaTags = new ArrayList<>();
@@ -149,13 +147,33 @@ public class Menu {
                             }
                             break;
 
+                        case 3: //add
+                            System.out.println("Ingrese la ID de la publicacion");
+                            Integer idAgregar = input.nextInt();
+                            System.out.println("Ingrese el contenido que desea agregar al documento:");
+                            input.nextLine();
+                            String textoAgregar = input.nextLine();
+                            ctrl.agregarTexto(idAgregar, textoAgregar);
+                            break;
 
-                        case 4://cerrar sesion ->logout
+                        case 4: //rollback
+                            System.out.println("Ingrese la ID del documento que desee restaurar");
+                            Integer idRestaurar = input.nextInt();
+                            System.out.println("Ingrese la ID que de la version a la que desea restaurar:");
+                            Integer idVersion = input.nextInt();
+                            ctrl.rollback(idRestaurar, idVersion);
+                            break;
+
+                        case 5: //visualizar
+                            ctrl.visualize();
+                            break;
+
+                        case 6://cerrar sesion ->logout
                             System.out.println("Sesion cerrada.\n");
                             //Logout
                             ctrl.logout();
                             break;
-                        case 5://salir del programa ->cerrar menu
+                        case 7://salir del programa ->cerrar menu
                             System.out.println("Saliendo del programa\n");
                             cerrarMenu = true;
                             break;

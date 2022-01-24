@@ -19,21 +19,6 @@ public class Publicaciones {
     private ArrayList<String> lectura;
     private ArrayList<String> comentario;
     private ArrayList<Versiones> version;
-     /*
-    //constructor
-    public Publicaciones(String cuerpo, Usuario autor,String titulo,ArrayList<Permisos> compartidos) {
-        idPublicaciones +=1;
-        this.idPubli =idPublicaciones;
-        this.compartidos = compartidos;
-        this.version = new ArrayList<>();
-        this.cuerpoPubli = cuerpo;
-        this.autorPubli = autor;
-        this.tituloPubli = titulo;
-        //OBTENER LA FECHA CON UTIL.DATE
-        SimpleDateFormat tipoFecha = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = new Date();
-        this.fechaPubli = tipoFecha.format(date);
-    }*/
 
     // constructor
     public Publicaciones(String titulo, String texto, Usuario autor){
@@ -52,7 +37,7 @@ public class Publicaciones {
 
     }
 
-    public Publicaciones(String titulo, String texto, Usuario autor, ArrayList<String> escritura, ArrayList<String> lectura, ArrayList<String> comentario){
+    public Publicaciones(String titulo, String texto, Usuario autor, ArrayList<String> escritura, ArrayList<String> lectura, ArrayList<String> comentario, ArrayList<Versiones> versionesAnteriores){
         idPublicaciones +=1;
         this.idPubli =idPublicaciones;
         this.autorPubli = autor;
@@ -64,17 +49,32 @@ public class Publicaciones {
         this.escritura = escritura;
         this.lectura = lectura;
         this.comentario = comentario;
-        this.version = new ArrayList<>();
+        this.version = versionesAnteriores;
     }
 
+
+    public Publicaciones(Integer id,String titulo, String texto, Usuario autor, ArrayList<String> escritura, ArrayList<String> lectura, ArrayList<String> comentario, ArrayList<Versiones> versionesAnteriores){
+        this.idPubli =id;
+        this.autorPubli = autor;
+        this.tituloPubli = titulo;
+        this.cuerpoPubli = texto;
+        SimpleDateFormat tipoFecha = new SimpleDateFormat("dd/MM/yyyy");
+        Date tempDate = new Date();
+        this.fechaPubli = tipoFecha.format(tempDate);
+        this.escritura = escritura;
+        this.lectura = lectura;
+        this.comentario = comentario;
+        this.version = versionesAnteriores;
+    }
 
     //to string de una publicacion
     public String publicacionAstring(){
         //falta agregar los comentarios luego
-        return  "Autor: "+autorPubli.getUsername()+" ID publicacion: "+ idPubli+" fecha:"+fechaPubli+"\n"+" titulo:"+tituloPubli+"\n cuerpo:"+cuerpoPubli+"\n Permiso escritura:"+escritura+"\n"+"Permiso lectura:"+lectura+"\n"+"Permiso comentario:"+comentario+"\n";
+        return  "Autor: "+autorPubli.getUsername()+" ID publicacion: "+ idPubli+" fecha:"+fechaPubli+"\n"+" titulo:"+tituloPubli+"\n cuerpo:"+cuerpoPubli+"\n Permiso escritura:"+escritura+"\n"+"Permiso lectura:"+lectura+"\n"+"Permiso comentario:"+comentario+"\n"+"Cantidad de Versiones: "+(getVersion().size())+"\n";
 
 
     }
+
 
     // Getters and Setters
 
@@ -106,53 +106,47 @@ public class Publicaciones {
     public void setVersion(ArrayList<Versiones> version) { this.version = version; }
 
 
+
+    // metodos
+
     /**
      * agrega un usuario a la lista de escritura
      * @param escritura
      */
     public void addEscritura(ArrayList<String> escritura){
-        /*
-        ArrayList<String> list = getEscritura();
-        ArrayList<String> listLectura = getLectura();
-        ArrayList<String> listComentario = getComentario();
+      ArrayList<String> listEscritura = getEscritura();
+      ArrayList<String> listLectura = getLectura();
+      ArrayList<String> listComentario = getComentario();
+      Integer comprobar = 0;
+
+      for(int i = 0; i < escritura.size(); i++){
+          for(int j = 0; j < listLectura.size(); j++){
+              if (escritura.get(i).equals(listLectura.get(j))){
+                  listLectura.remove(j);
+              }
+          }
+      }
 
         for(int i = 0; i < escritura.size(); i++){
-
-            for(int j = 0; j < list.size(); j++) {
-
-                if(escritura.get(i).equals(list.get(j))){
-                    break;
-                }
-            }
-
-        }
-        for(int i = 0; i < escritura.size(); i++) {
-            for (int j = 0; j < listLectura.size(); j++) {
-                if(escritura.get(i).equals(listLectura.get(j))){
-                    listLectura.remove(j);
-                }else{
-                    list.add(escritura.get(i));
+            for(int j = 0; j < listComentario.size(); j++){
+                if (escritura.get(i).equals(listComentario.get(j))){
+                    listComentario.remove(j);
                 }
             }
         }
 
-        for(int i = 0; i < escritura.size(); i++) {
-            for (int j = 0; j < listComentario.size(); j++) {
-                if(escritura.get(i).equals(listComentario.get(j))){
-                    listLectura.remove(j);
-                }else{
-                    list.add(escritura.get(i));
-                }
-            }
-        }
-        */
-
-        ArrayList<String> list = getEscritura();
         for(int i = 0; i < escritura.size(); i++){
-            list.add(escritura.get(i));
+            for(int j = 0; j < listEscritura.size(); j++){
+                if (escritura.get(i).equals(listEscritura.get(j))){
+                    comprobar = 1;
+                    continue;
+                }
+            }
+            if(comprobar!=1){
+                listEscritura.add(escritura.get(i));
+            }
         }
-
-        setEscritura(list);
+        setEscritura(listEscritura);
     }
 
     /**
@@ -160,11 +154,39 @@ public class Publicaciones {
      * @param lectura
      */
     public void addLectura(ArrayList<String> lectura){
-        ArrayList<String> list = getLectura();
+        ArrayList<String> listEscritura = getEscritura();
+        ArrayList<String> listLectura = getLectura();
+        ArrayList<String> listComentario = getComentario();
+        Integer comprobar = 0;
+
         for(int i = 0; i < lectura.size(); i++){
-            list.add(lectura.get(i));
+            for(int j = 0; j < listEscritura.size(); j++){
+                if (lectura.get(i).equals(listEscritura.get(j))){
+                    listEscritura.remove(j);
+                }
+            }
         }
-        setLectura(list);
+
+        for(int i = 0; i < lectura.size(); i++){
+            for(int j = 0; j < listComentario.size(); j++){
+                if (lectura.get(i).equals(listComentario.get(j))){
+                    listComentario.remove(j);
+                }
+            }
+        }
+
+        for(int i = 0; i < lectura.size(); i++){
+            for(int j = 0; j < listLectura.size(); j++){
+                if (lectura.get(i).equals(listLectura.get(j))){
+                    comprobar = 1;
+                    continue;
+                }
+            }
+            if(comprobar!=1){
+                listLectura.add(lectura.get(i));
+            }
+        }
+        setLectura(listLectura);
     }
 
     /**
@@ -172,11 +194,49 @@ public class Publicaciones {
      * @param comentario
      */
     public void addComentario(ArrayList<String> comentario){
-        ArrayList<String> list = getComentario();
+        ArrayList<String> listEscritura = getEscritura();
+        ArrayList<String> listLectura = getLectura();
+        ArrayList<String> listComentario = getComentario();
+        Integer comprobar = 0;
+
         for(int i = 0; i < comentario.size(); i++){
-            list.add(comentario.get(i));
+            for(int j = 0; j < listLectura.size(); j++){
+                if (comentario.get(i).equals(listLectura.get(j))){
+                    listLectura.remove(j);
+                }
+            }
         }
-        setComentario(list);
+
+        for(int i = 0; i < comentario.size(); i++){
+            for(int j = 0; j < listComentario.size(); j++){
+                if (comentario.get(i).equals(listComentario.get(j))){
+                    listComentario.remove(j);
+                }
+            }
+        }
+
+        for(int i = 0; i < comentario.size(); i++){
+            for(int j = 0; j < listComentario.size(); j++){
+                if (comentario.get(i).equals(listComentario.get(j))){
+                    comprobar = 1;
+                    continue;
+                }
+            }
+            if(comprobar!=1){
+                listComentario.add(comentario.get(i));
+            }
+        }
+        setComentario(listComentario);
+    }
+
+    /**
+     * agrega una publicacion a la lista de versiones
+     * @param version
+     */
+    public void addPostVersion(Versiones version){
+        ArrayList<Versiones> list = getVersion();
+        list.add(version);
+        setVersion(list);
     }
 
 

@@ -6,7 +6,6 @@ public class PL {
     //Atributos
     private ArrayList<Usuario> users;
     private ArrayList<Publicaciones> publis;
-    //private ArrayList<Versiones> Vers;
     private String name;
     private Usuario userOn;
     private boolean conectado = false;

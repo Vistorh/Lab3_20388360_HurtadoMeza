@@ -1,20 +1,30 @@
 package Model;
 
-public class Versiones {
+import java.util.ArrayList;
+
+public class Versiones extends ArrayList<Versiones> {
     //atributos
     private Integer idPubli;
     private String tituloPubli;
     private String cuerpoPubli;
     private String fechaPubli;
     private Usuario autorPubli;
+    private ArrayList<String> escritura;
+    private ArrayList<String> lectura;
+    private ArrayList<String> comentario;
 
-    public Versiones(Integer idPubli, String tituloPubli, String cuerpoPubli, String fechaPubli, Usuario autorPubli) {
+    public Versiones(Integer idPubli, String tituloPubli, String cuerpoPubli, String fechaPubli, Usuario autorPubli, ArrayList<String> escritura, ArrayList<String> lectura, ArrayList<String> comentario){
         this.idPubli = idPubli;
         this.tituloPubli = tituloPubli;
         this.cuerpoPubli = cuerpoPubli;
         this.fechaPubli = fechaPubli;
         this.autorPubli = autorPubli;
+        this.escritura = escritura;
+        this.lectura = lectura;
+        this.comentario = comentario;
     }
+
+
 
     // Getter and Setters
 
@@ -32,6 +42,16 @@ public class Versiones {
 
     public Usuario getAutorPubli() { return autorPubli; }
     public void setAutorPubli(Usuario autorPubli) { this.autorPubli = autorPubli; }
+
+    public ArrayList<String> getEscritura() {return escritura;}
+    public void setEscritura(ArrayList<String> escritura) {this.escritura = escritura;}
+
+    public ArrayList<String> getLectura() {return lectura;}
+    public void setLectura(ArrayList<String> lectura) {this.lectura = lectura;}
+
+    public ArrayList<String> getComentario() {return comentario;}
+    public void setComentario(ArrayList<String> comentario) {this.comentario = comentario;}
+
 
 
 

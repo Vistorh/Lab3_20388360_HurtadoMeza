@@ -64,8 +64,18 @@ public class Usuario {
 
     //usuario a string
     public String userAstring(){
-
         return "Nombre:"+username+" Tienes un total de:"+publicacionesRealizadas.size()+"publicaciones realizadas\n";
+    }
+
+    /**
+     * Agrega una publicacion a la lista de publicaciones del usuario
+     * @param publicacion
+     */
+    public void addUserPost(Publicaciones publicacion){
+        ArrayList<Publicaciones> list = getPublicacionesRealizadas();
+        list.add(publicacion);
+        setPublicacionesRealizadas(list);
+
     }
 
 

@@ -198,11 +198,95 @@ public class Control {
     }
 
 
+    public void agregarTexto(Integer id,String textoAgregar){
+        PL plataforma = getPlataforma();
+        Usuario userConectado = plataforma.getUserOn();
+        String retorno;
+        // buscamos si la publicacion existe
+        for (int i = 0; i < plataforma.getPublis().size(); i++) {
+            if (plataforma.getPublis().get(i).getIdPubli() == id) {
+                if(plataforma.getPublis().get(i).getAutorPubli().equals(userConectado)) {
+                    retorno = (plataforma.getPublis().get(i).getCuerpoPubli()) + textoAgregar;
+                    Versiones newVersion = new Versiones(plataforma.getPublis().get(i).getIdPubli(),plataforma.getPublis().get(i).getTituloPubli(),plataforma.getPublis().get(i).getCuerpoPubli(), plataforma.getPublis().get(i).getFechaPubli(),userConectado, plataforma.getPublis().get(i).getEscritura(),plataforma.getPublis().get(i).getLectura(), plataforma.getPublis().get(i).getComentario());
+                    // encontramos la publicacion, por lo que se crea una actualizada
+                    Publicaciones addPost = new Publicaciones(plataforma.getPublis().get(i).getTituloPubli(),retorno, userConectado, plataforma.getPublis().get(i).getEscritura(),plataforma.getPublis().get(i).getLectura(), plataforma.getPublis().get(i).getComentario(),newVersion);
+                    // quito la publicacion que busco
+                    plataforma.getPublis().remove(plataforma.getPublis().get(i));
+                    plataforma.getUserOn().getPublicacionesRealizadas().remove( plataforma.getUserOn().getPublicacionesRealizadas().get(i));
+                    // agrego la nueva publciacion a la red social y al usuario en cuestion
+                    addPost.addPostVersion(newVersion);
+                    plataforma.addPostPL(addPost);
+                    plataforma.getUserOn().addUserPost(addPost);
+                    System.out.println("Publicacion actualizada con exito!");
+                    return;
+                }else{
+                    for(int j = 0; j < plataforma.getPublis().get(i).getEscritura().size(); j++) {
+                        String conectado = plataforma.getUserOn().getUsername();
+                        if (plataforma.getPublis().get(i).getEscritura().get(j).equals(conectado)) {
 
+                            retorno = (plataforma.getPublis().get(i).getCuerpoPubli()) + textoAgregar;
+                            Versiones newVersion = new Versiones(plataforma.getPublis().get(i).getIdPubli(),plataforma.getPublis().get(i).getTituloPubli(),plataforma.getPublis().get(i).getCuerpoPubli(), plataforma.getPublis().get(i).getFechaPubli(),plataforma.getPublis().get(i).getAutorPubli(), plataforma.getPublis().get(i).getEscritura(),plataforma.getPublis().get(i).getLectura(), plataforma.getPublis().get(i).getComentario());
 
+                            // encontramos la publicacion, por lo que se crea una actualizada
+                            Publicaciones addPost = new Publicaciones(plataforma.getPublis().get(i).getTituloPubli(),retorno, plataforma.getPublis().get(i).getAutorPubli(), plataforma.getPublis().get(i).getEscritura(),plataforma.getPublis().get(i).getLectura(), plataforma.getPublis().get(i).getComentario(),newVersion);
 
+                            // quito la publicacion que busco
+                            plataforma.getPublis().remove(plataforma.getPublis().get(i));
+                            plataforma.getPublis().get(i).getAutorPubli().getPublicacionesRealizadas().remove( plataforma.getPublis().get(i).getAutorPubli().getPublicacionesRealizadas().get(i));
+                            // agrego la nueva publciacion a la red social y al usuario en cuestion
+                            addPost.addPostVersion(newVersion);
+                            plataforma.addPostPL(addPost);
+                            plataforma.getPublis().get(i).getAutorPubli().addUserPost(addPost);
+                            System.out.println("Publicacion actualizada con exito!");
+                            return;
+                        }
+                    }
+                    System.out.println("El usuario probablemente no cuenta con el permiso necesario :(");
+                    return;
+                }
+            }
+            System.out.println("\nNo se encontro la piblicacion a editar :(");
+        }
+    }
 
+    public void rollback(Integer idCambiar,Integer IdBuscar) {
+        PL plataforma = getPlataforma();
+        Usuario userConectado = plataforma.getUserOn();
 
+        // buscamos si la publicacion existe
+        for (int i = 0; i < plataforma.getPublis().size(); i++) {
+            if (plataforma.getPublis().get(i).getIdPubli() == idCambiar) {
+                //verificamos que pertenesca al usuario
+                if (plataforma.getPublis().get(i).getAutorPubli().equals(userConectado)){
+                    for (int j = 0; j < plataforma.getPublis().get(i).getVersion().size(); j++) {
+                        if (plataforma.getPublis().get(i).getVersion().get(j).getIdPubli().equals(IdBuscar)){
+
+                            ArrayList<Versiones> VerAnt = plataforma.getPublis().get(i).getVersion().get(j); //version encontrada y guardada que se debe usar
+                            //version actual que deberia ir en el historial
+                            Versiones newVersion = new Versiones(plataforma.getPublis().get(i).getIdPubli(),plataforma.getPublis().get(i).getTituloPubli(),plataforma.getPublis().get(i).getCuerpoPubli(), plataforma.getPublis().get(i).getFechaPubli(),plataforma.getPublis().get(i).getAutorPubli(), plataforma.getPublis().get(i).getEscritura(),plataforma.getPublis().get(i).getLectura(), plataforma.getPublis().get(i).getComentario());
+                            // remover la version que se usara
+                            plataforma.getPublis().get(i).getVersion().remove(plataforma.getPublis().get(i).getVersion().get(j));
+
+                            // encontramos la publicacion, por lo que se crea una con los datos anteriores
+                            Publicaciones rollPost = new Publicaciones(IdBuscar,plataforma.getPublis().get(i).getTituloPubli(),plataforma.getPublis().get(i).getVersion().get(j).getCuerpoPubli(),userConectado ,plataforma.getPublis().get(i).getVersion().get(j).getEscritura(), plataforma.getPublis().get(i).getVersion().get(j).getLectura(),plataforma.getPublis().get(i).getVersion().get(j).getComentario(), newVersion);
+
+                            // quito la publicacion que busco
+                            plataforma.getPublis().remove(plataforma.getPublis().get(i));
+                            plataforma.getPublis().get(i).getAutorPubli().getPublicacionesRealizadas().remove( plataforma.getPublis().get(i).getAutorPubli().getPublicacionesRealizadas().get(i));
+                            // agrego la nueva publciacion a la red social y al usuario en cuestion
+                            rollPost.addPostVersion(newVersion);
+                            plataforma.addPostPL(rollPost);
+                            plataforma.getPublis().get(i).getAutorPubli().addUserPost(rollPost);
+                            System.out.println("Publicacion restaurada con exito!");
+                            return;
+                        }
+
+                    }
+                }
+            }
+        }
+        System.out.println("El usuario no es el propietario de la publicacion, o no se encontro la publicacion con dicha ID");
+    }
 
     /**
      * funcion que permite visualizar la plataforma
