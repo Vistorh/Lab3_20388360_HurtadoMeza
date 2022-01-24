@@ -2,7 +2,7 @@ package Model;
 
 import java.util.ArrayList;
 
-public class Permisos {
+public class Permisos extends ArrayList<Permisos> {
 
     //atributos
     private Usuario permitido;
@@ -14,6 +14,8 @@ public class Permisos {
         this.permitido = permitido;
         this.permiso = permiso;
     }
+
+
 
     // Getters y Setters
 

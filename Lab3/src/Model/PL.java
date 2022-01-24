@@ -82,7 +82,22 @@ public class PL {
     }
 
 
+
+
+
+
+    /**
+     * agrega una publicacion a la lista de publicaciones
+     * @param publicacion
+     */
+    public void addPostPL(Publicaciones publicacion){
+        ArrayList<Publicaciones> list = getPublis();
+        list.add(publicacion);
+        setPublis(list);
+    }
+
     //metodo que permite visualizar la totalidad de la PL paradigmadocstostring
+
     public String snToString(){
         //esta funcion genera dos tipos de Strings, el primero con un usuario logeado y el segundo sin el usuario logeado
         int i;

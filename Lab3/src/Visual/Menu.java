@@ -100,8 +100,9 @@ public class Menu {
                 System.out.println("Escoja la opción que desea realizar: ");
                 System.out.println("1. Realizar publicación");
                 System.out.println("2. Visualizar usuario");
-                System.out.println("3. Cerrar sesión");
-                System.out.println("4. Salir del programa");
+                System.out.println("3. otorgar permiso");
+                System.out.println("4. Cerrar sesión");
+                System.out.println("5. Salir del programa");
 
 
                 try {
@@ -121,12 +122,40 @@ public class Menu {
                             ctrl.visualize();
                             break;
 
-                        case 3://cerrar sesion ->logout
+                        case 3: // share
+                            System.out.println("Ingrese la ID de la publicacion");
+                            Integer idACompartir = input.nextInt();
+                            ArrayList<String> listaTags = new ArrayList<>();
+                            System.out.println("Ingrese la cantidad de personas que desee que tengan permisos:");
+                            int cantTags = input.nextInt();
+                            System.out.println("Cantidad de etiquetados seleccionada: "+cantTags);
+                            for (int i = 0; i < cantTags; i++) {
+                                System.out.println("Ingrese el usuario numero "+ (i+1));
+                                input.nextLine();
+                                String tag = input.nextLine();
+                                listaTags.add(tag);
+                            }
+                            System.out.println("Ingrese el tipo de permiso que desee otorgar: ");
+                            System.out.println("ingrese 1 para escritura ");
+                            System.out.println("ingrese 2 para lectura ");
+                            System.out.println("ingrese 3 para comentario ");
+                            Integer permiso = input.nextInt();
+                            // discriminamos el caso en que haya etiquetados o no
+                            if (cantTags == 0) {
+                                System.out.println("no a ingresado ningun etiquetado ");
+                                break;
+                            }else{
+                                ctrl.share(idACompartir,listaTags,permiso);
+                            }
+                            break;
+
+
+                        case 4://cerrar sesion ->logout
                             System.out.println("Sesion cerrada.\n");
                             //Logout
                             ctrl.logout();
                             break;
-                        case 4://salir del programa ->cerrar menu
+                        case 5://salir del programa ->cerrar menu
                             System.out.println("Saliendo del programa\n");
                             cerrarMenu = true;
                             break;
