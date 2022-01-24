@@ -37,8 +37,8 @@ public class Versiones extends ArrayList<Versiones> {
     public String getCuerpoPubli() { return cuerpoPubli; }
     public void setCuerpoPubli(String cuerpoPubli) { this.cuerpoPubli = cuerpoPubli; }
 
-    public String getFechaPubli() { return fechaPubli; }
-    public void setFechaPubli(String fechaPubli) { this.fechaPubli = fechaPubli; }
+    public String getFechaPubliV() { return fechaPubli; }
+    public void setFechaPubliV(String fechaPubli) { this.fechaPubli = fechaPubli; }
 
     public Usuario getAutorPubli() { return autorPubli; }
     public void setAutorPubli(Usuario autorPubli) { this.autorPubli = autorPubli; }

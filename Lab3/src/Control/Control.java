@@ -112,7 +112,7 @@ public class Control {
         plataforma.getPublis().add(newPost);
         // se agrega la publicacion a la lista de publicaciones del usuario
         autor.getPublicacionesRealizadas().add(newPost);
-        System.out.println("Se a subido el documento con exito");
+        System.out.println("Se a subido el documento con exito\n");
 
     }
 
@@ -147,23 +147,20 @@ public class Control {
             if (plataforma.getPublis().get(i).getIdPubli() == id) {
                 if (plataforma.getPublis().get(i).getAutorPubli().equals(userConectado)) {
                     if (permiso == 1) {
-                        //plataforma.getPublis().get(i).setEscritura(listaTags);
                         plataforma.getPublis().get(i).addEscritura(listaFinal);
-                        System.out.println("Publicacion compartida con exito!");
+                        System.out.println("Publicacion compartida con exito!\n");
                         return;
                     }
                     if (permiso == 2) {
-                        //plataforma.getPublis().get(i).setLectura(listaTags);
                         plataforma.getPublis().get(i).addLectura(listaFinal);
-                        System.out.println("Publicacion compartida con exito!");
+                        System.out.println("Publicacion compartida con exito!\n");
                         return;
                     } if(permiso == 3) {
-                        //plataforma.getPublis().get(i).setComentario(listaTags);
                         plataforma.getPublis().get(i).addComentario(listaFinal);
-                        System.out.println("Publicacion compartida con exito!");
+                        System.out.println("Publicacion compartida con exito!\n");
                         return;
                     }else {
-                        System.out.println("no a otorgado ninguno de los 3 permisos antes mencionados");
+                        System.out.println("no a otorgado ninguno de los 3 permisos antes mencionados\n");
                         return;
                     }
                 }else{
@@ -172,29 +169,30 @@ public class Control {
                         if (plataforma.getPublis().get(i).getEscritura().get(j).equals(conectado)) {
                             if (permiso == 1) {
                                 plataforma.getPublis().get(i).addEscritura(listaFinal);
-                                System.out.println("Publicacion compartida con exito!");
+                                System.out.println("Publicacion compartida con exito!\n");
                                 return;
                             }
                             if (permiso == 2) {
                                 plataforma.getPublis().get(i).addLectura(listaFinal);
-                                System.out.println("Publicacion compartida con exito!");
+                                System.out.println("Publicacion compartida con exito!\n");
                                 return;
-                            } if(permiso == 3) {
+                            }
+                            if(permiso == 3) {
                                 plataforma.getPublis().get(i).addComentario(listaFinal);
-                                System.out.println("Publicacion compartida con exito!");
+                                System.out.println("Publicacion compartida con exito!\n");
                                 return;
                             }else {
-                                System.out.println("no a otorgado ninguno de los 3 permisos antes mencionados");
+                                System.out.println("no a otorgado ninguno de los 3 permisos antes mencionados\n");
                                 return;
                             }
                         }
                     }
-                    System.out.println("El usuario probablemente no cuenta con el permiso necesario :(");
+                    System.out.println("El usuario probablemente no cuenta con el permiso necesario :(\n");
                     return;
                 }
             }
         }
-        System.out.println("La publicacion con la ID "+id+" no fue encontrada en la plataforma :(");
+        System.out.println("La publicacion con la ID "+id+" no fue encontrada en la plataforma :(\n");
     }
 
 
@@ -211,13 +209,13 @@ public class Control {
                     // encontramos la publicacion, por lo que se crea una actualizada
                     Publicaciones addPost = new Publicaciones(plataforma.getPublis().get(i).getTituloPubli(),retorno, userConectado, plataforma.getPublis().get(i).getEscritura(),plataforma.getPublis().get(i).getLectura(), plataforma.getPublis().get(i).getComentario(),newVersion);
                     // quito la publicacion que busco
-                    plataforma.getPublis().remove(plataforma.getPublis().get(i));
                     plataforma.getUserOn().getPublicacionesRealizadas().remove( plataforma.getUserOn().getPublicacionesRealizadas().get(i));
-                    // agrego la nueva publciacion a la red social y al usuario en cuestion
+                    plataforma.getPublis().remove(plataforma.getPublis().get(i));
+                    // agrego la nueva publciacion a la plataforma y al usuario en cuestion
                     addPost.addPostVersion(newVersion);
                     plataforma.addPostPL(addPost);
                     plataforma.getUserOn().addUserPost(addPost);
-                    System.out.println("Publicacion actualizada con exito!");
+                    System.out.println("Publicacion actualizada con exito!\n");
                     return;
                 }else{
                     for(int j = 0; j < plataforma.getPublis().get(i).getEscritura().size(); j++) {
@@ -226,18 +224,24 @@ public class Control {
 
                             retorno = (plataforma.getPublis().get(i).getCuerpoPubli()) + textoAgregar;
                             Versiones newVersion = new Versiones(plataforma.getPublis().get(i).getIdPubli(),plataforma.getPublis().get(i).getTituloPubli(),plataforma.getPublis().get(i).getCuerpoPubli(), plataforma.getPublis().get(i).getFechaPubli(),plataforma.getPublis().get(i).getAutorPubli(), plataforma.getPublis().get(i).getEscritura(),plataforma.getPublis().get(i).getLectura(), plataforma.getPublis().get(i).getComentario());
+                            System.out.println("pase la newVersion\n");
 
                             // encontramos la publicacion, por lo que se crea una actualizada
                             Publicaciones addPost = new Publicaciones(plataforma.getPublis().get(i).getTituloPubli(),retorno, plataforma.getPublis().get(i).getAutorPubli(), plataforma.getPublis().get(i).getEscritura(),plataforma.getPublis().get(i).getLectura(), plataforma.getPublis().get(i).getComentario(),newVersion);
+                            System.out.println("Cree la publicacion nueva\n");
 
                             // quito la publicacion que busco
+                            plataforma.getPublis().get(i).getAutorPubli().getPublicacionesRealizadas().remove(plataforma.getPublis().get(i).getAutorPubli().getPublicacionesRealizadas().get(i));
+                           // System.out.println("quite la publicacion de los usuarios\n");
                             plataforma.getPublis().remove(plataforma.getPublis().get(i));
-                            plataforma.getPublis().get(i).getAutorPubli().getPublicacionesRealizadas().remove( plataforma.getPublis().get(i).getAutorPubli().getPublicacionesRealizadas().get(i));
-                            // agrego la nueva publciacion a la red social y al usuario en cuestion
+                           // System.out.println("quite la publicacion de la plataforma\n");
+                            // agrego la nueva publciacion a la plataforma y al usuario en cuestion
                             addPost.addPostVersion(newVersion);
+                           // System.out.println("agregue el post version\n");
                             plataforma.addPostPL(addPost);
+                            //System.out.println("agregue el post\n");
                             plataforma.getPublis().get(i).getAutorPubli().addUserPost(addPost);
-                            System.out.println("Publicacion actualizada con exito!");
+                            System.out.println("Publicacion actualizada con exito!\n");
                             return;
                         }
                     }
@@ -249,7 +253,9 @@ public class Control {
         }
     }
 
-    public void rollback(Integer idCambiar,Integer IdBuscar) {
+
+
+    public void rollback(Integer idCambiar,Integer IdBuscar) {  //al parecer no funciona
         PL plataforma = getPlataforma();
         Usuario userConectado = plataforma.getUserOn();
 
@@ -260,33 +266,69 @@ public class Control {
                 if (plataforma.getPublis().get(i).getAutorPubli().equals(userConectado)){
                     for (int j = 0; j < plataforma.getPublis().get(i).getVersion().size(); j++) {
                         if (plataforma.getPublis().get(i).getVersion().get(j).getIdPubli().equals(IdBuscar)){
-
-                            ArrayList<Versiones> VerAnt = plataforma.getPublis().get(i).getVersion().get(j); //version encontrada y guardada que se debe usar
                             //version actual que deberia ir en el historial
-                            Versiones newVersion = new Versiones(plataforma.getPublis().get(i).getIdPubli(),plataforma.getPublis().get(i).getTituloPubli(),plataforma.getPublis().get(i).getCuerpoPubli(), plataforma.getPublis().get(i).getFechaPubli(),plataforma.getPublis().get(i).getAutorPubli(), plataforma.getPublis().get(i).getEscritura(),plataforma.getPublis().get(i).getLectura(), plataforma.getPublis().get(i).getComentario());
-                            // remover la version que se usara
-                            plataforma.getPublis().get(i).getVersion().remove(plataforma.getPublis().get(i).getVersion().get(j));
-
+                            Versiones newVersionRoll = new Versiones(plataforma.getPublis().get(i).getIdPubli(),plataforma.getPublis().get(i).getTituloPubli(),plataforma.getPublis().get(i).getCuerpoPubli(), plataforma.getPublis().get(i).getFechaPubli(),plataforma.getPublis().get(i).getAutorPubli(), plataforma.getPublis().get(i).getEscritura(),plataforma.getPublis().get(i).getLectura(), plataforma.getPublis().get(i).getComentario());
                             // encontramos la publicacion, por lo que se crea una con los datos anteriores
-                            Publicaciones rollPost = new Publicaciones(IdBuscar,plataforma.getPublis().get(i).getTituloPubli(),plataforma.getPublis().get(i).getVersion().get(j).getCuerpoPubli(),userConectado ,plataforma.getPublis().get(i).getVersion().get(j).getEscritura(), plataforma.getPublis().get(i).getVersion().get(j).getLectura(),plataforma.getPublis().get(i).getVersion().get(j).getComentario(), newVersion);
-
+                            Publicaciones rollPost = new Publicaciones(plataforma.getPublis().get(i).getVersion().get(j).getIdPubli(),plataforma.getPublis().get(i).getVersion().get(j).getFechaPubliV(),plataforma.getPublis().get(i).getVersion().get(j).getTituloPubli(),plataforma.getPublis().get(i).getVersion().get(j).getCuerpoPubli(),plataforma.getPublis().get(i).getVersion().get(j).getAutorPubli() ,plataforma.getPublis().get(i).getVersion().get(j).getEscritura(),plataforma.getPublis().get(i).getVersion().get(j).getLectura(),plataforma.getPublis().get(i).getVersion().get(j).getComentario(),newVersionRoll);
+                            // remover la version que se usara
                             // quito la publicacion que busco
+                            plataforma.getPublis().get(i).getAutorPubli().getPublicacionesRealizadas().remove(plataforma.getPublis().get(i).getAutorPubli().getPublicacionesRealizadas().get(j));
                             plataforma.getPublis().remove(plataforma.getPublis().get(i));
-                            plataforma.getPublis().get(i).getAutorPubli().getPublicacionesRealizadas().remove( plataforma.getPublis().get(i).getAutorPubli().getPublicacionesRealizadas().get(i));
-                            // agrego la nueva publciacion a la red social y al usuario en cuestion
-                            rollPost.addPostVersion(newVersion);
+                            // agrego la nueva publciacion a la plataforma y al usuario en cuestion
+                            rollPost.addPostVersion(newVersionRoll);
                             plataforma.addPostPL(rollPost);
                             plataforma.getPublis().get(i).getAutorPubli().addUserPost(rollPost);
-                            System.out.println("Publicacion restaurada con exito!");
+                            System.out.println("Publicacion actualizada con exito\n");
                             return;
                         }
-
                     }
                 }
             }
         }
-        System.out.println("El usuario no es el propietario de la publicacion, o no se encontro la publicacion con dicha ID");
+        System.out.println("El usuario no es el propietario de la publicacion, o no se encontro la publicacion con dicha ID\n");
     }
+
+    public void revokeAccess(Integer idRevocar){
+        PL plataforma = getPlataforma();
+        Usuario userConectado = plataforma.getUserOn();
+        // buscamos si la publicacion existe
+        for (int i = 0; i < plataforma.getPublis().size(); i++) {
+            if (plataforma.getPublis().get(i).getIdPubli() == idRevocar) {
+                //verificamos que pertenesca al usuario
+                if (plataforma.getPublis().get(i).getAutorPubli().equals(userConectado)) {
+                    ArrayList<String> empty = new ArrayList<>();
+                    Publicaciones revokeAcc = new Publicaciones(plataforma.getPublis().get(i).getIdPubli(),plataforma.getPublis().get(i).getFechaPubli(),plataforma.getPublis().get(i).getTituloPubli(),plataforma.getPublis().get(i).getCuerpoPubli(),plataforma.getPublis().get(i).getAutorPubli(),empty,empty,empty,plataforma.getPublis().get(i).getVersion());
+                    // quito la publicacion que busco
+                    plataforma.getPublis().remove(plataforma.getPublis().get(i));
+                    plataforma.getUserOn().getPublicacionesRealizadas().remove(plataforma.getUserOn().getPublicacionesRealizadas().get(i));
+                    // agrego la nueva publciacion a la plataforma y al usuario en cuestion
+                    plataforma.addPostPL(revokeAcc);
+                    plataforma.getUserOn().addUserPost(revokeAcc);
+                    System.out.println("Permisos revocados con exito\n");
+                    return;
+                }
+            }
+            System.out.println("No fue posible revocar los permisos debido a que no es de su propiedad o la publicacion no existe\n");
+        }
+    }
+
+    public void search(String textoBuscar){
+        PL plataforma = getPlataforma();
+
+        ArrayList<Publicaciones> listaEncontrados = new ArrayList<>();
+        // buscamos si la publicacion existe
+        for (int i = 0; i < plataforma.getPublis().size(); i++) {
+
+
+
+        }
+
+
+    }
+
+
+
+
 
     /**
      * funcion que permite visualizar la plataforma

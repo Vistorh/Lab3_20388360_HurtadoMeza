@@ -102,9 +102,10 @@ public class Menu {
                 System.out.println("2. Compartir documento");
                 System.out.println("3. Agregar contenido a un documento");
                 System.out.println("4. Restaurar versión de un documento");
-                System.out.println("5. Visualizar usuario");
-                System.out.println("6. Cerrar sesión");
-                System.out.println("7. Salir del programa");
+                System.out.println("5. Revocar acceso a un documento");
+                System.out.println("6. Visualizar usuario");
+                System.out.println("7. Cerrar sesión");
+                System.out.println("8. Salir del programa");
 
 
                 try {
@@ -157,23 +158,29 @@ public class Menu {
                             break;
 
                         case 4: //rollback
-                            System.out.println("Ingrese la ID del documento que desee restaurar");
+                            System.out.println("Ingrese la ID del documento que desee cambiar");
                             Integer idRestaurar = input.nextInt();
                             System.out.println("Ingrese la ID que de la version a la que desea restaurar:");
                             Integer idVersion = input.nextInt();
                             ctrl.rollback(idRestaurar, idVersion);
                             break;
 
-                        case 5: //visualizar
+                        case 5: //revokeAccess
+                            System.out.println("Ingrese la ID del documento al que desea quitar los permisos");
+                            Integer idrevocar = input.nextInt();
+                            ctrl.revokeAccess(idrevocar);
+                            break;
+
+                        case 6: //visualizar
                             ctrl.visualize();
                             break;
 
-                        case 6://cerrar sesion ->logout
+                        case 7://cerrar sesion ->logout
                             System.out.println("Sesion cerrada.\n");
                             //Logout
                             ctrl.logout();
                             break;
-                        case 7://salir del programa ->cerrar menu
+                        case 8://salir del programa ->cerrar menu
                             System.out.println("Saliendo del programa\n");
                             cerrarMenu = true;
                             break;

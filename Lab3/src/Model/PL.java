@@ -115,13 +115,15 @@ public class PL {
             //
             String strFinal2;
             strFinal2="### Bienvenido a Google Docs ###\n"+"### Actualmente contamos con "+(getUsers().size())+" usuarios registrados ###\n";
-            strFinal2=strFinal2+"### ¿Que esperas para unirte? ###\n";
             //en caso de que la cantidad de publicaciones sea mayor que 0 entonces las mostrare
-            if(getPublis().size()>=0){
+            if(getPublis().size() > 0){
                 strFinal2=strFinal2+"### Mira lo ultimo que se ha publicado ###\n";
                 for(i=0;i<getPublis().size();i++){
                     strFinal2=strFinal2+getPublis().get(i).publicacionAstring()+"\n";
                 }
+            }
+            if(getPublis().size() == 0) {
+                strFinal2 = strFinal2 + "### Aun no existen documentos en la plataforma ###\n";
             }
             return strFinal2;
         }
