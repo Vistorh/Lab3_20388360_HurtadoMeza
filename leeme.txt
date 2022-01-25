@@ -1,0 +1,6 @@
+# paradigmas2
+Laboratorio 2 de Paradigmas de programación.
+
+Alumno: Víctor Hurtado Meza.
+Sección: B-2
+Profesor: Víctor Flores Sanchez.
